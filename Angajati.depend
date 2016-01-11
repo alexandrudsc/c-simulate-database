@@ -1,0 +1,94 @@
+# depslib dependency file v1.0
+1452256035 source:e:\work\proiecte freelancer\angajati proiect c\angajati\main.c
+	<stdio.h>
+	<stdlib.h>
+	"dinlist.h"
+
+1452256269 e:\work\proiecte freelancer\angajati proiect c\angajati\dinlist.h
+
+1452255431 source:e:\work\proiecte freelancer\angajati proiect c\angajati\dinlist.c
+	<stdio.h>
+	<stdlib.h>
+	"dinlist.h"
+
+1452257548 source:e:\work\proiecte freelancer\angajati proiect c\angajati\employee_read_binary.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+	<errno.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<unistd.h>
+
+1452257625 e:\work\proiecte freelancer\angajati proiect c\angajati\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1452463626 source:e:\work\proiecte freelancer\angajati proiect c\angajati\employee_read_file.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+	<errno.h>
+
+1452463633 source:e:\work\proiecte freelancer\angajati proiect c\angajati\employee_write_text.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+	<errno.h>
+
+1452463670 source:e:\work\proiecte freelancer\angajati proiect c\angajati\struct.c
+	"struct.h"
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<unistd.h>
+
+1452546070 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\employee_read_file.c
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	"struct.h"
+	"dinlist.h"
+
+1452539012 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"data_cal.h"
+
+1452539436 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\employee_write_text.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+	<errno.h>
+
+1452546731 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\dinlist.c
+	<stdio.h>
+	<stdlib.h>
+	"dinlist.h"
+
+1452546751 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\dinlist.h
+	"struct.h"
+
+1452544209 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\struct.c
+	"struct.h"
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<unistd.h>
+
+1452535321 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\data_cal.h
+	<time.h>
+
+1452542946 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\data_cal.c
+	"data_cal.h"
+
+1452540915 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\util_ang.c
+	"struct.h"
+	"dinlist.h"
+
+1452546704 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\op_liste.c
+	"dinlist.h"
+
