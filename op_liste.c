@@ -1,4 +1,4 @@
-#include "dinlist.h"
+#include "op_liste.h"
 
 void afListaNumeSalariu(LIST l)
 {
@@ -64,7 +64,7 @@ void sortazaListaNume(LIST l)
 void salvareDepartamente(LIST l, char* dep_sal_maxim)
 {
     if (isEmpty(l))
-        return NULL;
+        return;
 
     // ordonez lista alfabetic dupa departamente
     sortazaListaDepartamente(l);
@@ -124,7 +124,6 @@ void salvareDepartamente(LIST l, char* dep_sal_maxim)
     salveazaDepartament(angajati_dep);
     destroyl(angajati_dep);
 
-    return NULL;
 }
 
 // scrie un departament intr-un fisier

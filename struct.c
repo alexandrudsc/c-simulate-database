@@ -29,15 +29,15 @@ void afAngajatRaw(FILE *stream, Angajat *Angajat)
 }
 
 // creez un angajat pe baza datelor
-Angajat* make_Angajat(int salariu, char* emp_nume, char* dep, data_cal* zi_start, data_cal* zi_stop )
+Angajat* make_Angajat(int salariu, char* ang_nume, char* dep, data_cal* zi_start, data_cal* zi_stop )
 {
-    Angajat * emp = (Angajat*)malloc(sizeof(Angajat));
-    emp->salariu = salariu;
-    emp->nume = strdup(emp_nume);
-    emp->dep = strdup(dep);
-    emp->zi_start = *zi_start;
-    emp->zi_stop = *zi_stop;
-    return emp;
+    Angajat * ang = (Angajat*)malloc(sizeof(Angajat));
+    ang->salariu = salariu;
+    ang->nume = strdup(ang_nume);
+    ang->dep = strdup(dep);
+    ang->zi_start = *zi_start;
+    ang->zi_stop = *zi_stop;
+    return ang;
 }
 
 // citesc un angajat de la tastatura
@@ -45,9 +45,9 @@ Angajat* prompt_for_Angajat()
 {
     // date specifice unui angajat
     char* line = (char*)malloc(LUNG_MAX * sizeof(char));
-    char emp_nume[100];
-    char emp_dep[100];
-    int emp_salariu;
+    char ang_nume[100];
+    char ang_dep[100];
+    int ang_salariu;
     data_cal zi_start;
     data_cal zi_stop;
 
@@ -66,7 +66,7 @@ Angajat* prompt_for_Angajat()
             break;
         case 1:
             // validare nume
-            if (sscanf(line, "%1000[0-9a-zA-Z ]s", emp_nume)) state = 2;
+            if (sscanf(line, "%1000[0-9a-zA-Z ]s", ang_nume)) state = 2;
             else
             {
                 state = 0;
@@ -84,7 +84,7 @@ Angajat* prompt_for_Angajat()
             break;
         case 3:
             // validare departament
-            if (sscanf(line, "%1000[0-9a-zA-Z ]s", emp_dep)) state = 4;
+            if (sscanf(line, "%1000[0-9a-zA-Z ]s", ang_dep)) state = 4;
             else
             {
                 state = 2;
@@ -101,7 +101,7 @@ Angajat* prompt_for_Angajat()
             break;
         case 5:
             // validare salariu
-            if (sscanf(line, "%d", &emp_salariu)) state = 6;
+            if (sscanf(line, "%d", &ang_salariu)) state = 6;
             else
             {
                 state = 4;
@@ -147,41 +147,40 @@ Angajat* prompt_for_Angajat()
     }
 
     // creez angajat si ii asociez datele citite
-    Angajat* emp = malloc(sizeof(Angajat));
-    emp->nume = strdup(emp_nume);
-    emp->dep = strdup(emp_dep);
-    emp->salariu = emp_salariu;
-    emp->zi_start = zi_start;
-    emp->zi_stop = zi_stop;
-    return emp;
+    Angajat* ang = malloc(sizeof(Angajat));
+    ang->nume = strdup(ang_nume);
+    ang->dep = strdup(ang_dep);
+    ang->salariu = ang_salariu;
+    ang->zi_start = zi_start;
+    ang->zi_stop = zi_stop;
+    return ang;
 }
 
 // sterg un angajat din memorie
-void free_Angajat(Angajat* emp)
+void free_Angajat(Angajat* ang)
 {
-    free(emp->nume);
-    free(emp->dep);
-    free(emp);
+    free(ang->nume);
+    free(ang->dep);
+    free(ang);
 }
 
 // citesc un angajat dintr-un fisier text
 Angajat* read_Angajat(FILE *stream)
 {
     char*  line = (char*)malloc(sizeof(char) * LUNG_MAX);
-    size_t len = 0;
-    size_t readsize;
-    char*  emp_nume = (char*)malloc(sizeof(char) * 100);
-    char*  emp_dep = (char*)malloc(sizeof(char) * 100);
-    int    emp_salariu;
+    size_t bytes_cititi;
+    char*  ang_nume = (char*)malloc(sizeof(char) * 100);
+    char*  ang_dep = (char*)malloc(sizeof(char) * 100);
+    int    ang_salariu;
     data_cal zi_start;
     data_cal zi_stop;
 
-    if ((readsize = fgets(line, LUNG_MAX, stream)) != -1)
+    if ((bytes_cititi = fgets(line, LUNG_MAX, stream)) != -1)
     {
-        sscanf(line, "%s %d %s %d.%d.%d %d.%d.%d", emp_nume, &emp_salariu, emp_dep,
+        sscanf(line, "%s %d %s %d.%d.%d %d.%d.%d", ang_nume, &ang_salariu, ang_dep,
                                                 &zi_start.zi, &zi_start.luna, &zi_start.an,
                                                 &zi_stop.zi, &zi_stop.luna, &zi_stop.an);
-        return make_Angajat(emp_salariu, emp_nume, emp_dep, &zi_start, &zi_stop);
+        return make_Angajat(ang_salariu, ang_nume, ang_dep, &zi_start, &zi_stop);
     }
     else
     {
@@ -220,22 +219,22 @@ void afAngajatBinary(int stream, Angajat *Angajat)
  */
 Angajat* read_Angajat_binary(int stream)
 {
-    int emp_salariu;
-    read(stream, &emp_salariu, sizeof(int));
-    size_t emp_nume_len;
-    read(stream, &emp_nume_len, sizeof(size_t));
-    char* emp_nume = (char*)malloc(emp_nume_len + 1);
-    emp_nume[emp_nume_len] = '\0';
-    read(stream, emp_nume, emp_nume_len);
-    size_t emp_dept_len;
-    read(stream, &emp_dept_len, sizeof(size_t));
-    char* emp_dept = (char*)malloc(emp_dept_len + 1);
-    emp_dept[emp_dept_len] = '\0';
-    read(stream, emp_dept, emp_dept_len);
-    Angajat* emp = (Angajat*)malloc(sizeof(Angajat));
-    emp->salariu = emp_salariu;
-    emp->dep = strdup(emp_dept);
-    emp->nume = strdup(emp_nume);
-    return emp;
+    int ang_salariu;
+    read(stream, &ang_salariu, sizeof(int));
+    size_t ang_nume_len;
+    read(stream, &ang_nume_len, sizeof(size_t));
+    char* ang_nume = (char*)malloc(ang_nume_len + 1);
+    ang_nume[ang_nume_len] = '\0';
+    read(stream, ang_nume, ang_nume_len);
+    size_t ang_dept_len;
+    read(stream, &ang_dept_len, sizeof(size_t));
+    char* ang_dept = (char*)malloc(ang_dept_len + 1);
+    ang_dept[ang_dept_len] = '\0';
+    read(stream, ang_dept, ang_dept_len);
+    Angajat* ang = (Angajat*)malloc(sizeof(Angajat));
+    ang->salariu = ang_salariu;
+    ang->dep = strdup(ang_dept);
+    ang->nume = strdup(ang_nume);
+    return ang;
 }
 

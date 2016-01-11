@@ -7,13 +7,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-/**
- * @brief Reads a number of Angajats from a binary file created by
- * Angajat_write_binary. Assumes the format written by that program.
- * If the format differs, the program will not work as intended.
- *
- * @return 1 if file failure, otherwise 0.
- */
 int main()
 {
     int infile = open("Angajat_output.dat", O_RDONLY);
@@ -29,7 +22,7 @@ int main()
     for (i = 0; i < num_Angajats; i++)
     {
         Angajats[i] = read_Angajat_binary(infile);
-        printAngajat(Angajats[i]);
+        afAngajat(Angajats[i]);
     }
 
     for (i = 0; i < num_Angajats; i++)
@@ -37,4 +30,6 @@ int main()
         free_Angajat(Angajats[i]);
     }
     close(infile);
+
+    return 0;
 }

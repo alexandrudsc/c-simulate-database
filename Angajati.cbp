@@ -39,15 +39,16 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dinlist.h" />
-		<Unit filename="employee_read_file.c">
+		<Unit filename="main_citeste_bin.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="employee_write_text.c">
+		<Unit filename="main_scrie_text.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="op_liste.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="op_liste.h" />
 		<Unit filename="struct.c">
 			<Option compilerVar="CC" />
 		</Unit>
