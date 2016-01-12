@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "dinlist.h"
 
-#define VOID_LIST void_angajat
+#define VOID_LIST void_cuvant
 #define VOID -1
 
-#define FORMAT_NUME_SALARIU "%s %s"
+#define FORMAT"%s"
 
-DATA void_angajat;
+DATA void_cuvant;
 
 static void copyData(int n, DATAP buf1, DATAP buf2)
 {
@@ -16,7 +16,7 @@ static void copyData(int n, DATAP buf1, DATAP buf2)
         buf2[i] = buf1[i];
 }
 
-LIST newl()
+LIST newlC()
 {
     LIST w = (LIST)malloc(sizeof(List));
     if(w != NULL)
@@ -30,7 +30,7 @@ LIST newl()
     return w;
 }
 
-LIST addBack(LIST l, DATA x)
+LIST addBackC(LIST l, DATA x)
 {
     if( isFULL(l))
     {
@@ -49,7 +49,7 @@ LIST addBack(LIST l, DATA x)
     return l;
 }
 
-LIST addFront(LIST l, DATA x)
+LIST addFrontC(LIST l, DATA x)
 {
     if(isEmpty(l))
     {
@@ -72,28 +72,28 @@ LIST addFront(LIST l, DATA x)
     return l;
 }
 
-DATA first(LIST l)
+DATA firstC(LIST l)
 {
     if(!isEmpty(l))
         return l->v[0];
     return VOID_LIST;
 }
 
-DATA last(LIST l)
+DATA lastC(LIST l)
 {
     if(!isEmpty(l))
         return l->v[l->last_elem-1];
     return VOID_LIST;
 }
 
-int lengthl(LIST l)
+int lengthlC(LIST l)
 {
     if(!isEmpty(l))
         return l->last_elem-1;
     return VOID;
 }
 
-LIST removeBack(LIST l)
+LIST removeBackC(LIST l)
 {
     if(!isEmpty(l))
     {
@@ -103,7 +103,7 @@ LIST removeBack(LIST l)
     return l;
 }
 
-LIST removeFront(LIST l)
+LIST removeFrontC(LIST l)
 {
     int i;
     if(!isEmpty(l))
@@ -117,19 +117,19 @@ LIST removeFront(LIST l)
 
 }
 
-void destroyl(LIST l)
+void destroylC(LIST l)
 {
     free(l->v);
     free(l);
 }
 
 
-BOOLEAN isFULL(LIST l)
+BOOLEAN isFULLC(LIST l)
 {
     return l->last_elem >= l->listSize-1 ? TRUE : FALSE;
 }
 
-BOOLEAN isEmpty(LIST l)
+BOOLEAN isEmptyC(LIST l)
 {
     return l->last_elem == 0 ? TRUE : FALSE;
 }

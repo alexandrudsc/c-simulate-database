@@ -61,7 +61,6 @@ Angajat* prompt_for_Angajat()
             // citire nume
             printf("Nume angajat");
             line = gets(line);
-            //line = readline("Enter the Angajat's nume: ");
             state = 1;
             break;
         case 1:
@@ -70,7 +69,7 @@ Angajat* prompt_for_Angajat()
             else
             {
                 state = 0;
-                printf("Please try again.\n");
+                printf("Incercati din nou.\n");
                 free(line);
             }
             break;
@@ -79,7 +78,6 @@ Angajat* prompt_for_Angajat()
             free(line);
             printf("Departament angajat");
             line = gets(line);
-            //line = readline("Enter the Angajat's dep: ");
             state = 3;
             break;
         case 3:
@@ -88,7 +86,7 @@ Angajat* prompt_for_Angajat()
             else
             {
                 state = 2;
-                printf("Please try again.\n");
+                printf("Incercati din nou.\n");
             }
             break;
         case 4:
@@ -96,7 +94,6 @@ Angajat* prompt_for_Angajat()
             free(line);
             printf("Salariu angajat");
             line = gets(line);
-            //line = readline("Enter the Angajat's salariu: ");
             state = 5;
             break;
         case 5:
@@ -105,7 +102,7 @@ Angajat* prompt_for_Angajat()
             else
             {
                 state = 4;
-                printf("Please try again.\n");
+                printf("Incercati din nou.\n");
             }
             break;
         case 6:
@@ -113,7 +110,6 @@ Angajat* prompt_for_Angajat()
             free(line);
             printf("Zi inceput contract (ZZ.LL.AAAA) ");
             line = gets(line);
-            //line = readline("Enter the Angajat's salariu: ");
             state = 7;
             break;
         case 7:
@@ -122,14 +118,13 @@ Angajat* prompt_for_Angajat()
             else
             {
                 state = 6;
-                printf("Please try again.\n");
+                printf("Incercati din nou.\n");
             }
         case 8:
             // citire zi stop
             free(line);
             printf("Zi incheiere contract (ZZ.LL.AAAA) ");
             line = gets(line);
-            //line = readline("Enter the Angajat's salariu: ");
             state = 9;
             break;
         case 9:
@@ -141,7 +136,7 @@ Angajat* prompt_for_Angajat()
             else
             {
                 state = 8;
-                printf("Please try again.\n");
+                printf("Incercati din nou.\n");
             }
         }
     }
@@ -208,33 +203,3 @@ void afAngajatBinary(int stream, Angajat *Angajat)
     write(stream, &str_length, sizeof(size_t));
     write(stream, Angajat->dep, strlen(Angajat->dep));
 }
-
-/**
- * @brief Reads one Angajat in from a binary file.
- * The file stream must be opened in binary mode.
- *
- * @param stream The stream to read from.
- *
- * @return A pointer to the newly created Angajat.
- */
-Angajat* read_Angajat_binary(int stream)
-{
-    int ang_salariu;
-    read(stream, &ang_salariu, sizeof(int));
-    size_t ang_nume_len;
-    read(stream, &ang_nume_len, sizeof(size_t));
-    char* ang_nume = (char*)malloc(ang_nume_len + 1);
-    ang_nume[ang_nume_len] = '\0';
-    read(stream, ang_nume, ang_nume_len);
-    size_t ang_dept_len;
-    read(stream, &ang_dept_len, sizeof(size_t));
-    char* ang_dept = (char*)malloc(ang_dept_len + 1);
-    ang_dept[ang_dept_len] = '\0';
-    read(stream, ang_dept, ang_dept_len);
-    Angajat* ang = (Angajat*)malloc(sizeof(Angajat));
-    ang->salariu = ang_salariu;
-    ang->dep = strdup(ang_dept);
-    ang->nume = strdup(ang_nume);
-    return ang;
-}
-

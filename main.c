@@ -4,40 +4,44 @@
 
 #include "struct.h"
 #include "dinlist.h"
+#include "util_ang.h"
+#include "op_liste.h"
+
+
+int nrAngajati(FILE *f);
+Angajat** citesteAngajati(FILE *f, int nr_ang);
+void search (char * filename, int  s, int *vlen, char ***vp);
+
 
 int main()
 {
-    FILE *outfile = fopen("Angajat_output.txt", "r"); //Open file for reading
-
-    if (outfile == NULL)
+	// vector de angajati cititi din fisiser
+	Angajat** ang_vector;	
+	// numar de angajati
+	int nr_ang = 0;
+	int i ;
+	
+	// citesc numele fisierului
+	printf("Alegeti fisierul:\n");
+	char* s = (char*)malloc(sizeof(char) *100);
+	gets(s);
+	
+	FILE* fisier = fopen(s, "r");
+	
+	if (fisier == NULL)
     {
-        printf("Error in Angajat_read_file: %d (%s)\n", errno, strerror(errno));
-        return 1;
+        printf("Eroare la citire: cod: %d, mesaj:(%s)\n", errno, strerror(errno));
+        return -1;
     }
+	nr_ang = nrAngajati(fisier);
 
-    // numar liniile din fisier
-    int ch;
-    int lines = 0;
-    while ((ch = fgetc(outfile)) != EOF)
-    {
-        if ( ch == '\n' )
-            lines++;
-    }
-    rewind(outfile);
-
-    // vector de angajati
-    Angajat** emp_array = (Angajat**)malloc(sizeof(Angajat) * lines);
-
-    int i;
-    // citesc fiecare angajat din fisier
-    for (i = 0; i < lines; i++)
-        emp_array[i] = read_Angajat(outfile);
-
-
+	ang_vector = citesteAngajati(fisier, nr_ang);
+	free(s);
+	
     // -------------------- 1. afisare angajati -------------------- //
     printf("-------------------- 1. afisare angajati --------------------\n");
-    for (i = 0; i < lines; i++)
-        afAngajat(emp_array[i]);
+    for (i = 0; i < nr_ang; i++)
+        afAngajat(ang_vector[i]);
 
 
     // -------------------- 2.a afisare angajati ultimele 6 luni -------------------- //
@@ -45,24 +49,24 @@ int main()
     data_cal data_curenta;
     dataCurenta(&data_curenta.zi, &data_curenta.luna, &data_curenta.an);
 
-    for (i = 0; i < lines; i++)
-        if (difInLuni(&data_curenta, &emp_array[i]->zi_start) <= 6)
+    for (i = 0; i < nr_ang; i++)
+        if (difInLuni(&data_curenta, &ang_vector[i]->zi_start) <= 6)
         {
-            afNumeDep(emp_array[i]);
+            afNumeDep(ang_vector[i]);
         }
 
     // -------------------- 2.b afisare angajati incheiere contract -------------------- //
     printf("\n-------------------- 2.b afisare angajati incheiere contract-------------------- \n");
 
-    for (i = 0; i < lines; i++)
+    for (i = 0; i < nr_ang; i++)
     {
-        int dif_luni = difInLuni(&data_curenta, &emp_array[i]->zi_stop);
+        int dif_luni = difInLuni(&data_curenta, &ang_vector[i]->zi_stop);
 
         if ( dif_luni == -1)// &&       //
-            //data_curenta.an == emp_array[i].an &&
+            //data_curenta.an == ang_vector[i].an &&
             //data_curenta.luna == [i]->zi_stop.luna)
         {
-            afNumeDepSalariu(emp_array[i]);
+            afNumeDepSalariu(ang_vector[i]);
         }
     }
 
@@ -74,9 +78,9 @@ int main()
 
     LIST l = newl();
 
-    for (i = 0; i < lines; i++)
-        if ( strcmp(dep_ales, emp_array[i]->dep)  == 0)
-            addBack(l, *emp_array[i]);
+    for (i = 0; i < nr_ang; i++)
+        if ( strcmp(dep_ales, ang_vector[i]->dep)  == 0)
+            addBack(l, *ang_vector[i]);
 
     sortazaListaSalariu(l);
     afListaNumeSalariu(l);
@@ -87,8 +91,8 @@ int main()
     printf("\n-------------------- 2.d salvare angajati alfabetic -------------------- \n");
     l = newl();
     char* dep_salariu_maxim = (char *)malloc(sizeof(char) * LUNG_ELEM_MAX );
-    for (i = 0; i < lines; i++)
-        addBack(l, *emp_array[i]);
+    for (i = 0; i < nr_ang; i++)
+        addBack(l, *ang_vector[i]);
 
     salvareDepartamente(l,dep_salariu_maxim);
 
@@ -102,14 +106,113 @@ int main()
 
     // -------------------- 3. angajati salariu mai mic decat "s" -------------------- //
     printf("\n-------------------- 3. angajati salariu mai mic decat \"s\" -------------------- \n");
-
-
-
+	
+	// citesc salariu
+	printf("Alegeti salariul:\n");
+	int salariu;
+	scanf("%d", &salariu);
+	fflush(stdin);
+	
+	// citesc numele fisierului
+	printf("Alegeti fisierul:\n");
+	char* sir = (char*)malloc(sizeof(char) *100);
+	gets(sir);
+	
+	int vlen;
+	char** vp;
+	search(sir, salariu, &vlen, &vp);
+	
+	free(sir);
+	
+	for (i = 0; i < vlen; i++)
+		printf ("%s; ", vp[i]);
+	// eliberez stringurile indicate in vectorul de pointeri
+	for (i = 0; i < vlen; i++)
+		free(*(vp)[i]);
+	// eliberez vectorul de pointeri
+	free (vp);
+	
     // eliberare memorie angajati
-    for (i = 0; i < lines; i++)
-        free_Angajat(emp_array[i]);
-
-    fclose(outfile);
+    for (i = 0; i < nr_ang; i++)
+        free_Angajat(ang_vector[i]);
+	
+	
+    fclose(fisier);
     return 0;
 }
 
+// calculeaza nr de angajati din fisier
+int nrAngajati(FILE *f)
+{
+	int ch;
+	int nr_ang = 0;
+    while ((ch = fgetc(f)) != EOF)
+    {
+        if ( ch == '\n' )
+            nr_ang++;
+    }
+	rewind(f);
+	return nr_ang;
+}
+
+// citeste angajati din fisier
+Angajat** citesteAngajati(FILE *f, int nr_ang)
+{
+	// vector de angajati
+    Angajat** ang_vector = (Angajat**)malloc(sizeof(Angajat) * nr_ang);
+	
+    int i;
+    // citesc fiecare angajat din fisier
+    for (i = 0; i < nr_ang; i++)
+        ang_vector[i] = read_Angajat(f);
+	
+	return ang_vector;
+}
+
+// calculeaza cati si care angajati din fisier au salariu mai mare ca s
+void search (char* filename, int  s, int *vlen, char ***vp)
+{
+	// deschid fisier pentru citire
+	FILE* fisier_nou = fopen(filename, "r");
+	if (fisier_nou == NULL)
+    {
+        printf("Eroare la citire: cod: %d, mesaj:(%s)\n", errno, strerror(errno));
+        return;
+    }
+	
+	Angajat** angajati; 
+	int nr_ang;
+	
+	nr_ang = nrAngajati(fisier_nou);
+	angajati = citesteAngajati(fisier_nou, nr_ang);
+	
+	int i;
+	int j;
+	*vlen = 0;
+
+	for (i = 0; i < nr_ang; i++)
+		if (angajati[i]->salariu > s)
+			(*vlen)++;
+		
+	// creez vectorul de pointer catre string-uri
+	j=0;
+	char** nume = (char**)malloc(sizeof (char*) * (*vlen));
+	
+	for (i = 0; i  <nr_ang; i++)
+		if (angajati[i]->salariu > s){
+			// aloc spatiu pentru pointer catre string
+			nume[j] = (char*)malloc(sizeof (char)* LUNG_ELEM_MAX);
+			//cpoiez nume
+			strcpy(nume[j], angajati[i]->nume);
+			j++;
+		}
+	
+	*vp = nume;
+		
+	// eliberare memorie noi angajati
+    for (i = 0; i < nr_ang; i++)
+        free_Angajat(angajati[i]);
+	
+	fclose(fisier_nou);
+	
+}

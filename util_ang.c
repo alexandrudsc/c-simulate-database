@@ -1,5 +1,6 @@
 #include "struct.h"
 #include "dinlist.h"
+#include "util_ang.h"
 
 void afNumeDepSalariu(Angajat *angajat)
 {

@@ -1,5 +1,5 @@
 #include "op_liste.h"
-
+#include "util_ang.h"
 void afListaNumeSalariu(LIST l)
 {
     int i;
