@@ -52,7 +52,7 @@
 	"struct.h"
 	"dinlist.h"
 
-1452539012 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\struct.h
+1452547216 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\struct.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -64,31 +64,63 @@
 	"struct.h"
 	<errno.h>
 
-1452546731 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\dinlist.c
+1452589967 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\dinlist.c
 	<stdio.h>
 	<stdlib.h>
 	"dinlist.h"
 
-1452546751 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\dinlist.h
+1452597248 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\dinlist.h
 	"struct.h"
 
-1452544209 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\struct.c
+1452588930 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\struct.c
 	"struct.h"
 	<sys/types.h>
 	<sys/stat.h>
 	<fcntl.h>
 	<unistd.h>
 
-1452535321 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\data_cal.h
+1452588843 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\data_cal.h
 	<time.h>
 
 1452542946 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\data_cal.c
 	"data_cal.h"
 
-1452540915 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\util_ang.c
+1452588728 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\util_ang.c
 	"struct.h"
 	"dinlist.h"
+	"util_ang.h"
 
-1452546704 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\op_liste.c
+1452588825 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\op_liste.c
+	"op_liste.h"
+	"util_ang.h"
+
+1452547695 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\main_citeste_bin.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+	<errno.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<unistd.h>
+
+1452589466 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\main_scrie_text.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+	<errno.h>
+
+1452547591 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\op_liste.h
 	"dinlist.h"
+
+1452589537 e:\work\proiecte freelancer\angajati proiect c\angajati - copy\util_ang.h
+
+1452600400 source:e:\work\proiecte freelancer\angajati proiect c\angajati - copy\main.c
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	"struct.h"
+	"dinlist.h"
+	"util_ang.h"
+	"op_liste.h"
 

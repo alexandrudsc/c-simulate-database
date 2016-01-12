@@ -39,7 +39,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dinlist.h" />
-		<Unit filename="main_citeste_bin.c">
+		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="main_scrie_text.c">
@@ -56,6 +56,7 @@
 		<Unit filename="util_ang.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="util_ang.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
